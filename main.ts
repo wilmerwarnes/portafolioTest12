@@ -544,29 +544,31 @@ scrollHintStyleEl.textContent = `
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 14px;
+    gap: 16px;
     color: rgba(255,255,255,0.85);
     text-align: left;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.6s ease, transform 0.6s ease;
-    white-space: nowrap;
 }
 .scroll-hint-desktop.active {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
 .scroll-hint-desktop-text {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    line-height: 1.35;
-    max-width: 200px;
+    line-height: 1.3;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .scroll-hint-desktop-mouse {
-    width: 48px;
-    height: 60px;
+    width: 44px;
+    height: 54px;
     position: relative;
     flex-shrink: 0;
 }

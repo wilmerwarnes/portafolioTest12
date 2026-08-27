@@ -519,7 +519,8 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
 .case-blocks--tight .case-block-grid {
     grid-template-columns: repeat(2, 1fr); gap: 2px; padding: 0; border-radius: 0;
 }
-.case-blocks--tight .case-block-grid img { border-radius: 0; aspect-ratio: auto; }
+.case-blocks--tight .case-block-grid img { border-radius: 0; aspect-ratio: auto; opacity: 1; }
+.case-blocks--tight .case-block-grid img:hover { opacity: 1; transform: none; }
 .case-blocks--tight .case-block-video video { border-radius: 0; }
 .case-blocks--tight .case-block-embed { border-radius: 0; overflow: hidden; }
 .case-blocks--tight .case-block-video-row { gap: 2px; }

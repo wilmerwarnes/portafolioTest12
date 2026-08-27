@@ -3855,7 +3855,7 @@ void main() {
     .scroll-hint { bottom: 92px; }
 }
 
-/* === Desktop scroll hint (centrado abajo) === */
+/* === Desktop scroll hint (centrado abajo, texto izq + mouse der) === */
 .scroll-hint-desktop {
     position: fixed;
     left: 50%;
@@ -3863,31 +3863,34 @@ void main() {
     transform: translateX(-50%) translateY(20px);
     z-index: 15;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 10px;
-    color: rgba(255,255,255,0.8);
-    text-align: center;
+    justify-content: center;
+    gap: 14px;
+    color: rgba(255,255,255,0.85);
+    text-align: left;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.6s ease, transform 0.6s ease;
+    white-space: nowrap;
 }
 .scroll-hint-desktop.active {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
 .scroll-hint-desktop-text {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.2px;
-    line-height: 1.3;
-    max-width: 280px;
+    letter-spacing: 1px;
+    line-height: 1.35;
+    max-width: 200px;
 }
 .scroll-hint-desktop-mouse {
-    width: 56px;
-    height: 72px;
+    width: 48px;
+    height: 60px;
     position: relative;
+    flex-shrink: 0;
 }
 .scroll-hint-desktop-mouse svg {
     width: 100%;
@@ -3950,7 +3953,7 @@ void main() {
         vec3 color = mix(uColorCore, uColorEdge, clamp(d * 3.2, 0.0, 1.0));
         gl_FragColor = vec4(color, alpha);
     }
-`;let Ji=null,fl=null,pl=null,Hr=null;function cx(){const i=ax(rx,qi),e=i.slice(),t=new Float32Array(qi);for(let s=0;s<qi;s++)t[s]=Math.random();const n=new zt,r=new Pt(e,3);return r.setUsage(xf),n.setAttribute("position",r),n.setAttribute("aSeed",new Pt(t,1)),Hr=new rn({vertexShader:ox,fragmentShader:lx,transparent:!0,depthWrite:!1,blending:Fr,uniforms:{uTime:{value:0},uPixelRatio:{value:Math.min(window.devicePixelRatio,2)},uSize:{value:sx},uColorCore:{value:new Ce(16777215)},uColorEdge:{value:new Ce(65535)}}}),Ji=new Ch(n,Hr),Ji.raycast=()=>{},fl=i,pl=new Float32Array(qi*3),Ji}const ux="assets/models/mi-logo.glb",hx=4.5;function dx(i,e){i.updateMatrixWorld(!0);const t=[];let n=0;const r=new R,s=new R,o=new R,a=new R,l=new R;i.traverse(u=>{if(!u.isMesh)return;const f=(u.geometry.index?u.geometry.toNonIndexed():u.geometry).getAttribute("position"),m=Math.floor(f.count/3);if(m===0)return;const _=new Float32Array(m);let g=0;for(let d=0;d<m;d++)r.fromBufferAttribute(f,d*3).applyMatrix4(u.matrixWorld),s.fromBufferAttribute(f,d*3+1).applyMatrix4(u.matrixWorld),o.fromBufferAttribute(f,d*3+2).applyMatrix4(u.matrixWorld),a.subVectors(s,r),l.subVectors(o,r),g+=a.cross(l).length()*.5,_[d]=g;g>0&&(n+=g,t.push({pos:f,matrix:u.matrixWorld.clone(),areas:_,triCount:m,cumulative:n}))});const c=new Float32Array(e*3);if(t.length===0||n===0)return c;for(let u=0;u<e;u++){const h=Math.random()*n;let f=t[t.length-1];for(let v=0;v<t.length;v++)if(h<=t[v].cumulative){f=t[v];break}const m=Math.random()*f.areas[f.triCount-1];let _=0,g=f.triCount-1;for(;_<g;){const v=_+g>>1;f.areas[v]<m?_=v+1:g=v}r.fromBufferAttribute(f.pos,_*3).applyMatrix4(f.matrix),s.fromBufferAttribute(f.pos,_*3+1).applyMatrix4(f.matrix),o.fromBufferAttribute(f.pos,_*3+2).applyMatrix4(f.matrix);let d=Math.random(),p=Math.random();d+p>1&&(d=1-d,p=1-p);const E=1-d-p;c[u*3]=r.x*E+s.x*d+o.x*p,c[u*3+1]=r.y*E+s.y*d+o.y*p,c[u*3+2]=r.z*E+s.z*d+o.z*p}return c}function fx(i,e){let t=1/0,n=1/0,r=1/0,s=-1/0,o=-1/0,a=-1/0;for(let m=0;m<i.length;m+=3)t=Math.min(t,i[m]),s=Math.max(s,i[m]),n=Math.min(n,i[m+1]),o=Math.max(o,i[m+1]),r=Math.min(r,i[m+2]),a=Math.max(a,i[m+2]);const l=(t+s)/2,c=(n+o)/2,u=(r+a)/2,h=Math.max(s-t,o-n,a-r,1e-4),f=e/h;for(let m=0;m<i.length;m+=3)i[m]=(i[m]-l)*f,i[m+1]=(i[m+1]-c)*f,i[m+2]=(i[m+2]-u)*f}function px(i){fl=i;const e=Ji.geometry.getAttribute("position");e.array.set(i),e.needsUpdate=!0,pl.fill(0)}async function mx(i){const t=(await _d(()=>import("./GLTFLoader-DpUeJgcF.js"),[])).GLTFLoader;new t().load(i,r=>{const s=dx(r.scene,qi);fx(s,hx),px(s)},void 0,r=>{console.warn("No se pudo cargar el .glb de particulas, se mantiene la figura de prueba:",r)})}const wu=new kn,Cu=new R,zs=new R,Ru=new R,Lu=new R;function gx(i,e){if(!Ji)return;const t=Ji.geometry.getAttribute("position"),n=t.array,r=fl,s=pl;let o=!1;sn&&Rt===0&&!Xe()&&(et.getWorldDirection(Ru),Ln.getWorldPosition(Lu),wu.setFromNormalAndCoplanarPoint(Ru,Lu),Yi.setFromCamera(qr,et),Yi.ray.intersectPlane(wu,Cu)&&(Ln.worldToLocal(zs.copy(Cu)),o=!0));const a=Math.exp(-6*i),l=xo*xo;for(let c=0;c<qi;c++){const u=c*3,h=u+1,f=u+2;let m=s[u],_=s[h],g=s[f];if(o){const d=n[u]-zs.x,p=n[h]-zs.y,E=n[f]-zs.z,v=d*d+p*p+E*E;if(v<l&&v>1e-4){const T=Math.sqrt(v),L=d/T,A=p/T,w=E/T,H=1-T/xo,y=H*H*i,b=-A,z=L,q=0;m+=(L+b*yo)*Mo*y,_+=(A+z*yo)*Mo*y,g+=(w+q*yo)*Mo*y}}m+=(r[u]-n[u])*So*i,_+=(r[h]-n[h])*So*i,g+=(r[f]-n[f])*So*i,m*=a,_*=a,g*=a,n[u]+=m*i,n[h]+=_*i,n[f]+=g*i,s[u]=m,s[h]=_,s[f]=g}t.needsUpdate=!0,Hr.uniforms.uTime.value=e}const Gh=-2.75,Vh=2.75,sr=1,_x=1,Ws=.0092,vx=1.95,xx=-.55,Mx=.68,yx=.0078,Ln=new Gn;Ln.position.set(Vh,sr,0);Ln.add(cx());st.add(Ln);mx(ux);let Wo=sr,Xo=sr;function Wh(){const i=pn[kt];return`
+`;let Ji=null,fl=null,pl=null,Hr=null;function cx(){const i=ax(rx,qi),e=i.slice(),t=new Float32Array(qi);for(let s=0;s<qi;s++)t[s]=Math.random();const n=new zt,r=new Pt(e,3);return r.setUsage(xf),n.setAttribute("position",r),n.setAttribute("aSeed",new Pt(t,1)),Hr=new rn({vertexShader:ox,fragmentShader:lx,transparent:!0,depthWrite:!1,blending:Fr,uniforms:{uTime:{value:0},uPixelRatio:{value:Math.min(window.devicePixelRatio,2)},uSize:{value:sx},uColorCore:{value:new Ce(16777215)},uColorEdge:{value:new Ce(65535)}}}),Ji=new Ch(n,Hr),Ji.raycast=()=>{},fl=i,pl=new Float32Array(qi*3),Ji}const ux="assets/models/mi-logo.glb",hx=4.5;function dx(i,e){i.updateMatrixWorld(!0);const t=[];let n=0;const r=new R,s=new R,o=new R,a=new R,l=new R;i.traverse(u=>{if(!u.isMesh)return;const f=(u.geometry.index?u.geometry.toNonIndexed():u.geometry).getAttribute("position"),m=Math.floor(f.count/3);if(m===0)return;const _=new Float32Array(m);let g=0;for(let d=0;d<m;d++)r.fromBufferAttribute(f,d*3).applyMatrix4(u.matrixWorld),s.fromBufferAttribute(f,d*3+1).applyMatrix4(u.matrixWorld),o.fromBufferAttribute(f,d*3+2).applyMatrix4(u.matrixWorld),a.subVectors(s,r),l.subVectors(o,r),g+=a.cross(l).length()*.5,_[d]=g;g>0&&(n+=g,t.push({pos:f,matrix:u.matrixWorld.clone(),areas:_,triCount:m,cumulative:n}))});const c=new Float32Array(e*3);if(t.length===0||n===0)return c;for(let u=0;u<e;u++){const h=Math.random()*n;let f=t[t.length-1];for(let v=0;v<t.length;v++)if(h<=t[v].cumulative){f=t[v];break}const m=Math.random()*f.areas[f.triCount-1];let _=0,g=f.triCount-1;for(;_<g;){const v=_+g>>1;f.areas[v]<m?_=v+1:g=v}r.fromBufferAttribute(f.pos,_*3).applyMatrix4(f.matrix),s.fromBufferAttribute(f.pos,_*3+1).applyMatrix4(f.matrix),o.fromBufferAttribute(f.pos,_*3+2).applyMatrix4(f.matrix);let d=Math.random(),p=Math.random();d+p>1&&(d=1-d,p=1-p);const E=1-d-p;c[u*3]=r.x*E+s.x*d+o.x*p,c[u*3+1]=r.y*E+s.y*d+o.y*p,c[u*3+2]=r.z*E+s.z*d+o.z*p}return c}function fx(i,e){let t=1/0,n=1/0,r=1/0,s=-1/0,o=-1/0,a=-1/0;for(let m=0;m<i.length;m+=3)t=Math.min(t,i[m]),s=Math.max(s,i[m]),n=Math.min(n,i[m+1]),o=Math.max(o,i[m+1]),r=Math.min(r,i[m+2]),a=Math.max(a,i[m+2]);const l=(t+s)/2,c=(n+o)/2,u=(r+a)/2,h=Math.max(s-t,o-n,a-r,1e-4),f=e/h;for(let m=0;m<i.length;m+=3)i[m]=(i[m]-l)*f,i[m+1]=(i[m+1]-c)*f,i[m+2]=(i[m+2]-u)*f}function px(i){fl=i;const e=Ji.geometry.getAttribute("position");e.array.set(i),e.needsUpdate=!0,pl.fill(0)}async function mx(i){const t=(await _d(()=>import("./GLTFLoader-CmjMxfdj.js"),[])).GLTFLoader;new t().load(i,r=>{const s=dx(r.scene,qi);fx(s,hx),px(s)},void 0,r=>{console.warn("No se pudo cargar el .glb de particulas, se mantiene la figura de prueba:",r)})}const wu=new kn,Cu=new R,zs=new R,Ru=new R,Lu=new R;function gx(i,e){if(!Ji)return;const t=Ji.geometry.getAttribute("position"),n=t.array,r=fl,s=pl;let o=!1;sn&&Rt===0&&!Xe()&&(et.getWorldDirection(Ru),Ln.getWorldPosition(Lu),wu.setFromNormalAndCoplanarPoint(Ru,Lu),Yi.setFromCamera(qr,et),Yi.ray.intersectPlane(wu,Cu)&&(Ln.worldToLocal(zs.copy(Cu)),o=!0));const a=Math.exp(-6*i),l=xo*xo;for(let c=0;c<qi;c++){const u=c*3,h=u+1,f=u+2;let m=s[u],_=s[h],g=s[f];if(o){const d=n[u]-zs.x,p=n[h]-zs.y,E=n[f]-zs.z,v=d*d+p*p+E*E;if(v<l&&v>1e-4){const T=Math.sqrt(v),L=d/T,A=p/T,w=E/T,H=1-T/xo,y=H*H*i,b=-A,z=L,q=0;m+=(L+b*yo)*Mo*y,_+=(A+z*yo)*Mo*y,g+=(w+q*yo)*Mo*y}}m+=(r[u]-n[u])*So*i,_+=(r[h]-n[h])*So*i,g+=(r[f]-n[f])*So*i,m*=a,_*=a,g*=a,n[u]+=m*i,n[h]+=_*i,n[f]+=g*i,s[u]=m,s[h]=_,s[f]=g}t.needsUpdate=!0,Hr.uniforms.uTime.value=e}const Gh=-2.75,Vh=2.75,sr=1,_x=1,Ws=.0092,vx=1.95,xx=-.55,Mx=.68,yx=.0078,Ln=new Gn;Ln.position.set(Vh,sr,0);Ln.add(cx());st.add(Ln);mx(ux);let Wo=sr,Xo=sr;function Wh(){const i=pn[kt];return`
         <span class="hero-name">${i.hero_name}</span>
         <span class="hero-role">${i.hero_role}</span>`}const fr=document.createElement("div");fr.className="hero-text";fr.innerHTML=Wh();const ar=new Qr(fr);ar.scale.set(Ws,Ws,Ws);ar.position.set(Gh,sr,0);mi.add(ar);function Sx(){fr.innerHTML=Wh()}function Xh(){const i=Xe(),e=i?Mx:_x;Wo=i?vx:sr,Ln.position.set(i?0:Vh,Wo,0),Ln.scale.set(e,e,e);const t=i?yx:Ws;Xo=i?xx:sr,ar.scale.set(t,t,t),ar.position.set(i?0:Gh,Xo,0),fr.classList.toggle("hero-text-centered",i)}Xh();const ml=-16,gl=-68,Xs=.0125,Ex=.0125,bx="https://picsum.photos/seed/wilmer-perfil-card/700/700",Tx="https://picsum.photos/seed/wilmer-contacto-card/700/700";function qh(i){const e=pn[kt];return i==="about"?`
             <div class="info-card-media"><img src="${bx}" alt="Wilmer Warnes" draggable="false"></div>

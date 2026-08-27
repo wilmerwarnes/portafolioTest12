@@ -517,7 +517,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
 }
 .case-blocks--tight .case-block-image img { border-radius: 0; }
 .case-blocks--tight .case-block-grid {
-    gap: 2px; padding: 0; border-radius: 0;
+    grid-template-columns: repeat(2, 1fr); gap: 2px; padding: 0; border-radius: 0;
 }
 .case-blocks--tight .case-block-grid img { border-radius: 0; aspect-ratio: auto; }
 .case-blocks--tight .case-block-video video { border-radius: 0; }
@@ -526,6 +526,8 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
 .case-blocks--tight .case-block-video-row .video-row-item video,
 .case-blocks--tight .case-block-video-row .video-row-item img,
 .case-blocks--tight .case-block-video-row .video-row-item > div { border-radius: 0; }
+/* Ocultar hero solo para Tobey */
+.lb-landing--tight .lb-hero { display: none; }
 
 /* Ahora es un elemento propio en <body> (no hijo de .lightbox-overlay,
    que es el que hace scroll), asi que necesita z-index mayor al del

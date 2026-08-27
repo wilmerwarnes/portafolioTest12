@@ -2532,15 +2532,20 @@ function renderCaseBlock(block) {
         case 'gif':
             return `<div class="case-block case-block-image case-block-gif"><span class="case-block-tag">GIF</span><img src="${block.src}" alt="" loading="lazy" draggable="false"></div>`;
         case 'video':
-            return `<div class="case-block case-block-video"><video src="${block.src}"${block.poster ? ` poster="${block.poster}"` : ''} controls playsinline preload="metadata"></video></div>`;
+            return `<div class="case-block case-block-video"><video src="${block.src}"${block.poster ? ` poster="${block.poster}"` : ''} controls loop playsinline preload="metadata" muted></video></div>`;
         case 'embed':
             return `<div class="case-block case-block-embed"><div style="padding:${block.ratio || '56.25%'} 0 0 0;position:relative;"><iframe src="${block.src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" allowfullscreen loading="lazy" title="Video"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script></div>`;
+        case 'embed-txt': {
+            const esc = (s: string) => s.replace(/"/g, '&quot;');
+            return `<div class="case-block case-block-embed" data-embed-txt="${esc(block.src)}"><div style="padding:56.25% 0 0 0;position:relative;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0a10;color:rgba(255,255,255,0.6);font-size:0.75rem;">Cargando video...</div></div></div>`;
+        }
         case 'grid':
             return `<div class="case-block case-block-grid">${block.images.map((src) => `<img src="${src}" alt="" loading="lazy" draggable="false">`).join('')}</div>`;
         case 'video-row':
             return `<div class="case-block case-block-video-row">${(block.items || []).map((item) => {
                 if (item.type === 'embed') return `<div class="video-row-item"><div style="padding:${item.ratio || '56.25%'} 0 0 0;position:relative;"><iframe src="${item.src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" allowfullscreen loading="lazy"></iframe></div></div>`;
-                if (item.type === 'video') return `<div class="video-row-item"><video src="${item.src}"${item.poster ? ` poster="${item.poster}"` : ''} controls playsinline preload="metadata"></video></div>`;
+                if (item.type === 'embed-txt') return `<div class="video-row-item" data-embed-txt="${item.src.replace(/"/g, '&quot;')}"><div style="padding:56.25% 0 0 0;position:relative;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0a10;color:rgba(255,255,255,0.6);font-size:0.75rem;">Cargando video...</div></div></div>`;
+                if (item.type === 'video') return `<div class="video-row-item"><video src="${item.src}"${item.poster ? ` poster="${item.poster}"` : ''} controls loop playsinline preload="metadata" muted></video></div>`;
                 if (item.type === 'image') return `<div class="video-row-item"><img src="${item.src}" alt="" loading="lazy"></div>`;
                 return '';
             }).join('')}</div>`;
@@ -2552,6 +2557,31 @@ function renderCaseBlocks(blocks, project) {
     const tight = project && project.name === 'Tobey';
     const cls = tight ? 'case-blocks case-blocks--tight' : 'case-blocks';
     return `<div class="${cls}">${blocks.map(renderCaseBlock).join('')}</div>`;
+}
+async function hydrateEmbedTxtBlocks(container: HTMLElement) {
+    const els = container.querySelectorAll('[data-embed-txt]');
+    for (const el of Array.from(els) as HTMLElement[]) {
+        const txtPath = el.getAttribute('data-embed-txt');
+        if (!txtPath) continue;
+        try {
+            const res = await fetch(txtPath);
+            if (!res.ok) throw new Error(String(res.status));
+            const html = await res.text();
+            // El txt contiene un div + iframe + script. Lo insertamos directo.
+            el.innerHTML = html;
+            // Si el html trajo un <script>, forzamos su ejecución
+            const scripts = el.querySelectorAll('script');
+            scripts.forEach((old) => {
+                const s = document.createElement('script');
+                if ((old as HTMLScriptElement).src) s.src = (old as HTMLScriptElement).src;
+                else s.textContent = old.textContent;
+                document.head.appendChild(s);
+            });
+        } catch (e) {
+            console.warn('[embed-txt] fallo al cargar', txtPath, e);
+            el.innerHTML = `<div style="padding:16px;background:#1a1a1a;color:#fff;font-size:0.75rem;">No se pudo cargar el video: ${txtPath}</div>`;
+        }
+    }
 }
 
 let lightboxEl = null;
@@ -2592,18 +2622,23 @@ window.openLightbox = openLightbox = function (cat, id) {
         ? renderCaseBlocks(project.blocks, project)
         : `<div class="lb-body"><p>${project.desc}</p></div><div class="lb-gallery">${project.gallery.map((src) => `<img src="${src}" alt="${project.name}" loading="lazy" draggable="false">`).join('')}</div>`;
 
-    lightboxEl.innerHTML = `
-        <div class="lb-landing">
+    const isTight = project.name === 'Tobey';
+    const heroHTML = isTight ? '' : `
             <div class="lb-hero">
                 <img src="${project.img}" alt="${project.name}" draggable="false">
                 <div class="lb-hero-caption">
                     <span class="lb-tag">Proyecto 0${project.id}</span>
                     <h3>${project.name}</h3>
                 </div>
-            </div>
+            </div>`;
+    lightboxEl.innerHTML = `
+        <div class="lb-landing ${isTight ? 'lb-landing--tight' : ''}">
+            ${heroHTML}
             ${bodyHTML}
         </div>
     `;
+    // Hidratar embeds que vienen de archivos .txt (verifica el doc siempre)
+    hydrateEmbedTxtBlocks(lightboxEl);
 
     lightboxEl.classList.add('open');
     lightboxCloseBtn.classList.add('open');

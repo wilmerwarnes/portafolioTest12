@@ -556,12 +556,12 @@ scrollHintStyleEl.textContent = `
     transform: translateX(-50%) translateY(0);
 }
 .scroll-hint-desktop-text {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     line-height: 1.3;
-    max-width: 220px;
+    max-width: 280px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

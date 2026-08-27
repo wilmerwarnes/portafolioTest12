@@ -3,114 +3,188 @@
     "title": "Dimensión 3D & Shaders",
     "projects": [
       {
-        "id": 1,
+        "id": 2,
         "name": "Tobey",
         "desc": "modeling, character texturing, rigging/setup, animation, grooming, cloth simulation, lighting, to compositing.",
-        "img": "assets/Portafolio/3d_projects/02_Tobey/TobeyCover/TobeyCover_1x.webp",
+        "img": "assets/Portafolio/3d_projects/02_Tobey/cover/cover.webp",
         "gallery": [
-          "assets/Portafolio/3d_projects/02_Tobey/TobeyCover/TobeyCover_1x.webp",
-          "assets/Portafolio/3d_projects/02_Tobey/01_Tobey_main.png",
-          "assets/Portafolio/3d_projects/02_Tobey/02_Tobey_grid.png"
+          "assets/Portafolio/3d_projects/02_Tobey/cover/cover.webp",
+          "assets/Portafolio/3d_projects/02_Tobey/00_header.png",
+          "assets/Portafolio/3d_projects/02_Tobey/01_hero.png"
         ],
         "blocks": [
-          { "type": "image", "src": "assets/Portafolio/3d_projects/02_Tobey/00_Tobey_header.png" },
-          { "type": "image", "src": "assets/Portafolio/3d_projects/02_Tobey/01_Tobey_main.png" },
-          { "type": "grid", "images": [
-            "assets/Portafolio/3d_projects/02_Tobey/02_Tobey_grid.png",
-            "assets/Portafolio/3d_projects/02_Tobey/04_Tobey_grid.png",
-            "assets/Portafolio/3d_projects/02_Tobey/05_Tobey_grid.png",
-            "assets/Portafolio/3d_projects/02_Tobey/06_Tobey_grid.png"
-          ]},
-          { "type": "image", "src": "assets/Portafolio/3d_projects/02_Tobey/07_Tobey_headerSecondPart.png" },
-          { "type": "video-row", "items": [
-            { "type": "embed-txt", "src": "assets/Portafolio/3d_projects/02_Tobey/08_Tobey_vid1_insertar_f1l.txt" },
-            { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/09_Tobey_vid2_f2r.mp4" }
-          ]},
-          { "type": "image", "src": "assets/Portafolio/3d_projects/02_Tobey/10_Tobey_headerThirdPart.png" },
-          { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/11_Tobey_vid1.mp4" },
-          { "type": "embed-txt", "src": "assets/Portafolio/3d_projects/02_Tobey/12_Tobey_vid2_insertar.txt" },
-          { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/13_Tobey_vid3.mp4" }
+          {
+            "type": "image",
+            "src": "assets/Portafolio/3d_projects/02_Tobey/00_header.png"
+          },
+          {
+            "type": "image",
+            "src": "assets/Portafolio/3d_projects/02_Tobey/01_hero.png"
+          },
+          {
+            "type": "grid",
+            "images": [
+              "assets/Portafolio/3d_projects/02_Tobey/02_grid_01.png",
+              "assets/Portafolio/3d_projects/02_Tobey/02_grid_02.png",
+              "assets/Portafolio/3d_projects/02_Tobey/02_grid_03.png",
+              "assets/Portafolio/3d_projects/02_Tobey/02_grid_04.png"
+            ]
+          },
+          {
+            "type": "image",
+            "src": "assets/Portafolio/3d_projects/02_Tobey/03_header2.png"
+          },
+          {
+            "type": "video-row",
+            "items": [
+              {
+                "type": "embed-txt",
+                "src": "assets/Portafolio/3d_projects/02_Tobey/04_row_a_embed.txt"
+              },
+              {
+                "type": "video",
+                "src": "assets/Portafolio/3d_projects/02_Tobey/04_row_b.mp4"
+              }
+            ]
+          },
+          {
+            "type": "image",
+            "src": "assets/Portafolio/3d_projects/02_Tobey/05_header3.png"
+          },
+          {
+            "type": "video",
+            "src": "assets/Portafolio/3d_projects/02_Tobey/06_video.mp4"
+          },
+          {
+            "type": "embed-txt",
+            "src": "assets/Portafolio/3d_projects/02_Tobey/07_embed.txt"
+          },
+          {
+            "type": "video",
+            "src": "assets/Portafolio/3d_projects/02_Tobey/08_video.mp4"
+          }
+        ]
+      }
+    ]
+  },
+  "diseno": {
+    "title": "Posts & Branding Gráfico",
+    "projects": [
+      {
+        "id": 1,
+        "name": "Bee Zero Logistics",
+        "desc": "Sistemas corporativos integrados e identidades visuales sostenibles.",
+        "img": "https://picsum.photos/seed/dis-1/1200/800",
+        "gallery": [
+          "https://picsum.photos/seed/dis-1a/600/450",
+          "https://picsum.photos/seed/dis-1b/600/450",
+          "https://picsum.photos/seed/dis-1c/600/450"
         ]
       },
       {
         "id": 2,
-        "name": "Prismatic Spaces",
-        "desc": "Experimentación arquitectónica y volumetría digital inmersiva.",
-        "img": "https://picsum.photos/seed/3d-2/1200/800",
+        "name": "Eco Delivery Branding",
+        "desc": "Estrategia triple impacto y diseño de marca enfocado en Cochabamba.",
+        "img": "https://picsum.photos/seed/dis-2/1200/800",
         "gallery": [
-          "https://picsum.photos/seed/3d-2a/600/450",
-          "https://picsum.photos/seed/3d-2b/600/450",
-          "https://picsum.photos/seed/3d-2c/600/450"
-        ],
-        "blocks": [
-          { "type": "text", "body": "Experimentación arquitectónica y volumetría digital inmersiva. Este proyecto usa solo texto y una grilla de imagenes, sin video ni gif — para mostrar que cada proyecto puede tener la combinacion que quieras." },
-          { "type": "grid", "images": ["https://picsum.photos/seed/case-3d-2-g1/700/700", "https://picsum.photos/seed/case-3d-2-g2/700/700", "https://picsum.photos/seed/case-3d-2-g3/700/700", "https://picsum.photos/seed/case-3d-2-g4/700/700", "https://picsum.photos/seed/case-3d-2-g5/700/700", "https://picsum.photos/seed/case-3d-2-g6/700/700"] }
+          "https://picsum.photos/seed/dis-2a/600/450",
+          "https://picsum.photos/seed/dis-2b/600/450",
+          "https://picsum.photos/seed/dis-2c/600/450"
         ]
       },
       {
         "id": 3,
-        "name": "CGI Character Rigging",
-        "desc": "Modelado orgánico y animación esquelética de personajes 3D.",
-        "img": "https://picsum.photos/seed/3d-3/1200/800",
+        "name": "Sumaya Cowork",
+        "desc": "Identidad visual, buyer personas y campañas publicitarias integrales.",
+        "img": "https://picsum.photos/seed/dis-3/1200/800",
         "gallery": [
-          "https://picsum.photos/seed/3d-3a/600/450",
-          "https://picsum.photos/seed/3d-3b/600/450",
-          "https://picsum.photos/seed/3d-3c/600/450"
-        ],
-        "blocks": [
-          { "type": "text", "body": "Modelado orgánico y animación esquelética de personajes 3D. Este proyecto usa solo texto + una imagen ancha, ideal si no tenes mucho material para mostrar." },
-          { "type": "image", "src": "https://picsum.photos/seed/case-3d-3-wide/1600/900" }
+          "https://picsum.photos/seed/dis-3a/600/450",
+          "https://picsum.photos/seed/dis-3b/600/450",
+          "https://picsum.photos/seed/dis-3c/600/450"
         ]
       },
       {
         "id": 4,
-        "name": "GLSL Custom Shaders",
-        "desc": "Efectos visuales procedurales basados en matemáticas y shaders.",
-        "img": "https://picsum.photos/seed/3d-4/1200/800",
+        "name": "BeerStory Campaign",
+        "desc": "Campaña publicitaria de cerveza premium con temática mesopotámica.",
+        "img": "https://picsum.photos/seed/dis-4/1200/800",
         "gallery": [
-          "https://picsum.photos/seed/3d-4a/600/450",
-          "https://picsum.photos/seed/3d-4b/600/450",
-          "https://picsum.photos/seed/3d-4c/600/450"
-        ],
-        "blocks": [
-          { "type": "text", "body": "Efectos visuales procedurales basados en matemáticas y shaders. Este proyecto muestra solo texto + video, por ejemplo para un reel o demo tecnica." },
-          { "type": "video", "src": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", "poster": "https://picsum.photos/seed/case-3d-4-video/1600/900" }
+          "https://picsum.photos/seed/dis-4a/600/450",
+          "https://picsum.photos/seed/dis-4b/600/450",
+          "https://picsum.photos/seed/dis-4c/600/450"
         ]
       },
       {
         "id": 5,
-        "name": "Virtual Environment",
-        "desc": "Diseño de mundos virtuales interactivos optimizados para web.",
-        "img": "https://picsum.photos/seed/3d-5/1200/800",
+        "name": "Editorial & Book Fair",
+        "desc": "Dirección de arte, agendas literarias y diseño de interiores para eventos.",
+        "img": "https://picsum.photos/seed/dis-5/1200/800",
         "gallery": [
-          "https://picsum.photos/seed/3d-5a/600/450",
-          "https://picsum.photos/seed/3d-5b/600/450",
-          "https://picsum.photos/seed/3d-5c/600/450"
-        ],
-        "blocks": [
-          { "type": "text", "body": "Diseño de mundos virtuales interactivos optimizados para web. Este proyecto usa texto + un gif, util para mostrar un loop corto de animacion o interaccion." },
-          { "type": "gif", "src": "https://upload.wikimedia.org/wikipedia/commons/7/71/Rotating_earth_(large).gif" }
+          "https://picsum.photos/seed/dis-5a/600/450",
+          "https://picsum.photos/seed/dis-5b/600/450",
+          "https://picsum.photos/seed/dis-5c/600/450"
         ]
       }
-    ]},
-  "diseno": {
-    "title": "Posts & Branding Gráfico",
-    "projects": [
-      { "id": 1, "name": "Bee Zero Logistics", "desc": "Sistemas corporativos integrados e identidades visuales sostenibles.", "img": "https://picsum.photos/seed/dis-1/1200/800", "gallery": ["https://picsum.photos/seed/dis-1a/600/450", "https://picsum.photos/seed/dis-1b/600/450", "https://picsum.photos/seed/dis-1c/600/450"] },
-      { "id": 2, "name": "Eco Delivery Branding", "desc": "Estrategia triple impacto y diseño de marca enfocado en Cochabamba.", "img": "https://picsum.photos/seed/dis-2/1200/800", "gallery": ["https://picsum.photos/seed/dis-2a/600/450", "https://picsum.photos/seed/dis-2b/600/450", "https://picsum.photos/seed/dis-2c/600/450"] },
-      { "id": 3, "name": "Sumaya Cowork", "desc": "Identidad visual, buyer personas y campañas publicitarias integrales.", "img": "https://picsum.photos/seed/dis-3/1200/800", "gallery": ["https://picsum.photos/seed/dis-3a/600/450", "https://picsum.photos/seed/dis-3b/600/450", "https://picsum.photos/seed/dis-3c/600/450"] },
-      { "id": 4, "name": "BeerStory Campaign", "desc": "Campaña publicitaria de cerveza premium con temática mesopotámica.", "img": "https://picsum.photos/seed/dis-4/1200/800", "gallery": ["https://picsum.photos/seed/dis-4a/600/450", "https://picsum.photos/seed/dis-4b/600/450", "https://picsum.photos/seed/dis-4c/600/450"] },
-      { "id": 5, "name": "Editorial & Book Fair", "desc": "Dirección de arte, agendas literarias y diseño de interiores para eventos.", "img": "https://picsum.photos/seed/dis-5/1200/800", "gallery": ["https://picsum.photos/seed/dis-5a/600/450", "https://picsum.photos/seed/dis-5b/600/450", "https://picsum.photos/seed/dis-5c/600/450"] }
     ]
   },
   "edicion": {
     "title": "Video & Animación 2D",
     "projects": [
-      { "id": 1, "name": "VFX Motion Reel", "desc": "Postproducción dinámica, ritmo audiovisual y composición de elementos CGI.", "img": "https://picsum.photos/seed/edi-1/1200/800", "gallery": ["https://picsum.photos/seed/edi-1a/600/450", "https://picsum.photos/seed/edi-1b/600/450", "https://picsum.photos/seed/edi-1c/600/450"] },
-      { "id": 2, "name": "Commercial Spot Edit", "desc": "Edición de video publicitario de alto impacto con transiciones fluidas.", "img": "https://picsum.photos/seed/edi-2/1200/800", "gallery": ["https://picsum.photos/seed/edi-2a/600/450", "https://picsum.photos/seed/edi-2b/600/450", "https://picsum.photos/seed/edi-2c/600/450"] },
-      { "id": 3, "name": "Color Grading Masterclass", "desc": "Corrección de color cinematográfica y estética visual avanzada.", "img": "https://picsum.photos/seed/edi-3/1200/800", "gallery": ["https://picsum.photos/seed/edi-3a/600/450", "https://picsum.photos/seed/edi-3b/600/450", "https://picsum.photos/seed/edi-3c/600/450"] },
-      { "id": 4, "name": "Sound Design Integration", "desc": "Sincronización de audio, efectos foley y mezcla para piezas multimedia.", "img": "https://picsum.photos/seed/edi-4/1200/800", "gallery": ["https://picsum.photos/seed/edi-4a/600/450", "https://picsum.photos/seed/edi-4b/600/450", "https://picsum.photos/seed/edi-4c/600/450"] },
-      { "id": 5, "name": "Social Media Dynamics", "desc": "Contenido dinámico optimizado para plataformas digitales y agencias.", "img": "https://picsum.photos/seed/edi-5/1200/800", "gallery": ["https://picsum.photos/seed/edi-5a/600/450", "https://picsum.photos/seed/edi-5b/600/450", "https://picsum.photos/seed/edi-5c/600/450"] }
+      {
+        "id": 1,
+        "name": "VFX Motion Reel",
+        "desc": "Postproducción dinámica, ritmo audiovisual y composición de elementos CGI.",
+        "img": "https://picsum.photos/seed/edi-1/1200/800",
+        "gallery": [
+          "https://picsum.photos/seed/edi-1a/600/450",
+          "https://picsum.photos/seed/edi-1b/600/450",
+          "https://picsum.photos/seed/edi-1c/600/450"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Commercial Spot Edit",
+        "desc": "Edición de video publicitario de alto impacto con transiciones fluidas.",
+        "img": "https://picsum.photos/seed/edi-2/1200/800",
+        "gallery": [
+          "https://picsum.photos/seed/edi-2a/600/450",
+          "https://picsum.photos/seed/edi-2b/600/450",
+          "https://picsum.photos/seed/edi-2c/600/450"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Color Grading Masterclass",
+        "desc": "Corrección de color cinematográfica y estética visual avanzada.",
+        "img": "https://picsum.photos/seed/edi-3/1200/800",
+        "gallery": [
+          "https://picsum.photos/seed/edi-3a/600/450",
+          "https://picsum.photos/seed/edi-3b/600/450",
+          "https://picsum.photos/seed/edi-3c/600/450"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Sound Design Integration",
+        "desc": "Sincronización de audio, efectos foley y mezcla para piezas multimedia.",
+        "img": "https://picsum.photos/seed/edi-4/1200/800",
+        "gallery": [
+          "https://picsum.photos/seed/edi-4a/600/450",
+          "https://picsum.photos/seed/edi-4b/600/450",
+          "https://picsum.photos/seed/edi-4c/600/450"
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Social Media Dynamics",
+        "desc": "Contenido dinámico optimizado para plataformas digitales y agencias.",
+        "img": "https://picsum.photos/seed/edi-5/1200/800",
+        "gallery": [
+          "https://picsum.photos/seed/edi-5a/600/450",
+          "https://picsum.photos/seed/edi-5b/600/450",
+          "https://picsum.photos/seed/edi-5c/600/450"
+        ]
+      }
     ]
   }
 }

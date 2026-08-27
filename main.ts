@@ -2532,15 +2532,26 @@ function renderCaseBlock(block) {
         case 'gif':
             return `<div class="case-block case-block-image case-block-gif"><span class="case-block-tag">GIF</span><img src="${block.src}" alt="" loading="lazy" draggable="false"></div>`;
         case 'video':
-            return `<div class="case-block case-block-video"><span class="case-block-tag">VIDEO</span><video src="${block.src}"${block.poster ? ` poster="${block.poster}"` : ''} controls playsinline preload="metadata"></video></div>`;
+            return `<div class="case-block case-block-video"><video src="${block.src}"${block.poster ? ` poster="${block.poster}"` : ''} controls playsinline preload="metadata"></video></div>`;
+        case 'embed':
+            return `<div class="case-block case-block-embed"><div style="padding:${block.ratio || '56.25%'} 0 0 0;position:relative;"><iframe src="${block.src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" allowfullscreen loading="lazy" title="Video"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script></div>`;
         case 'grid':
             return `<div class="case-block case-block-grid">${block.images.map((src) => `<img src="${src}" alt="" loading="lazy" draggable="false">`).join('')}</div>`;
+        case 'video-row':
+            return `<div class="case-block case-block-video-row">${(block.items || []).map((item) => {
+                if (item.type === 'embed') return `<div class="video-row-item"><div style="padding:${item.ratio || '56.25%'} 0 0 0;position:relative;"><iframe src="${item.src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" allowfullscreen loading="lazy"></iframe></div></div>`;
+                if (item.type === 'video') return `<div class="video-row-item"><video src="${item.src}"${item.poster ? ` poster="${item.poster}"` : ''} controls playsinline preload="metadata"></video></div>`;
+                if (item.type === 'image') return `<div class="video-row-item"><img src="${item.src}" alt="" loading="lazy"></div>`;
+                return '';
+            }).join('')}</div>`;
         default:
             return '';
     }
 }
-function renderCaseBlocks(blocks) {
-    return `<div class="case-blocks">${blocks.map(renderCaseBlock).join('')}</div>`;
+function renderCaseBlocks(blocks, project) {
+    const tight = project && project.name === 'Tobey';
+    const cls = tight ? 'case-blocks case-blocks--tight' : 'case-blocks';
+    return `<div class="${cls}">${blocks.map(renderCaseBlock).join('')}</div>`;
 }
 
 let lightboxEl = null;
@@ -2578,7 +2589,7 @@ window.openLightbox = openLightbox = function (cat, id) {
     ensureLightboxCloseBtn();
 
     const bodyHTML = project.blocks
-        ? renderCaseBlocks(project.blocks)
+        ? renderCaseBlocks(project.blocks, project)
         : `<div class="lb-body"><p>${project.desc}</p></div><div class="lb-gallery">${project.gallery.map((src) => `<img src="${src}" alt="${project.name}" loading="lazy" draggable="false">`).join('')}</div>`;
 
     lightboxEl.innerHTML = `

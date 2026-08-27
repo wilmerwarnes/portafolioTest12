@@ -22,12 +22,16 @@
             "assets/Portafolio/3d_projects/02_Tobey/06_Tobey_grid.png"
           ]},
           { "type": "image", "src": "assets/Portafolio/3d_projects/02_Tobey/07_Tobey_headerSecondPart.png" },
-          { "type": "video", "src": "https://player.vimeo.com/video/922587138?badge=0&autopause=0&player_id=0&app_id=58479", "poster": "assets/Portafolio/3d_projects/02_Tobey/01_Tobey_main.png" },
-          { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/09_Tobey_vid2_f2r.mp4", "poster": "assets/Portafolio/3d_projects/02_Tobey/01_Tobey_main.png" },
+          { "type": "video-row", "items": [
+            { "type": "embed", "src": "https://player.vimeo.com/video/922587138?badge=0&autopause=0&player_id=0&app_id=58479", "ratio": "177.78%" },
+            { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/09_Tobey_vid2_f2r.mp4" }
+          ]},
           { "type": "image", "src": "assets/Portafolio/3d_projects/02_Tobey/10_Tobey_headerThirdPart.png" },
-          { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/11_Tobey_vid1.mp4", "poster": "assets/Portafolio/3d_projects/02_Tobey/01_Tobey_main.png" },
-          { "type": "video", "src": "https://player.vimeo.com/video/918169834?badge=0&autopause=0&player_id=0&app_id=58479&muted=1&loop=1", "poster": "assets/Portafolio/3d_projects/02_Tobey/01_Tobey_main.png" },
-          { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/13_Tobey_vid3_f2r.mp4", "poster": "assets/Portafolio/3d_projects/02_Tobey/01_Tobey_main.png" }
+          { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/11_Tobey_vid1.mp4" },
+          { "type": "video-row", "items": [
+            { "type": "embed", "src": "https://player.vimeo.com/video/918169834?badge=0&autopause=0&player_id=0&app_id=58479&muted=1&loop=1", "ratio": "100%" },
+            { "type": "video", "src": "assets/Portafolio/3d_projects/02_Tobey/13_Tobey_vid3_f2r.mp4" }
+          ]}
         ]
       },
       {

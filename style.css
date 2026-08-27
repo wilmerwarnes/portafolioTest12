@@ -479,13 +479,14 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
     max-width: 760px; margin: 0 auto;
     opacity: 0.82; line-height: 1.85; font-size: 1.05rem;
 }
-.case-block-image, .case-block-video { position: relative; }
+.case-block-image, .case-block-video, .case-block-embed { position: relative; }
 .case-block-image img,
 .case-block-video video {
     width: 100%; display: block; border-radius: 14px;
     background: #0a0a10;
 }
-.case-block-video video { aspect-ratio: 16/9; object-fit: cover; }
+.case-block-video video { width: 100%; height: auto; display: block; background: #0a0a10; }
+.case-block-embed iframe { display: block; }
 .case-block-tag {
     position: absolute; top: 16px; left: 16px; z-index: 2;
     background: rgba(0,0,0,0.55); backdrop-filter: blur(8px);
@@ -501,6 +502,30 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
     opacity: 0.92; transition: opacity 0.3s, transform 0.3s;
 }
 .case-block-grid img:hover { opacity: 1; transform: translateY(-4px); }
+.case-block-video-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.case-block-video-row .video-row-item video,
+.case-block-video-row .video-row-item img {
+    width: 100%; height: auto; display: block; border-radius: 12px; background: #0a0a10;
+}
+.case-block-video-row .video-row-item iframe { display: block; }
+
+/* Tobey - layout Behance sin márgenes entre bloques, full-bleed */
+.case-blocks--tight {
+    max-width: 1100px; margin: 0 auto 80px; padding: 0; gap: 0;
+}
+.case-blocks--tight .case-block-image img { border-radius: 0; }
+.case-blocks--tight .case-block-grid {
+    gap: 2px; padding: 0; border-radius: 0;
+}
+.case-blocks--tight .case-block-grid img { border-radius: 0; aspect-ratio: auto; }
+.case-blocks--tight .case-block-video video { border-radius: 0; }
+.case-blocks--tight .case-block-embed { border-radius: 0; overflow: hidden; }
+.case-blocks--tight .case-block-video-row { gap: 2px; }
+.case-blocks--tight .case-block-video-row .video-row-item video,
+.case-blocks--tight .case-block-video-row .video-row-item img,
+.case-blocks--tight .case-block-video-row .video-row-item > div { border-radius: 0; }
 
 /* Ahora es un elemento propio en <body> (no hijo de .lightbox-overlay,
    que es el que hace scroll), asi que necesita z-index mayor al del
@@ -569,7 +594,10 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
     .lb-body, .lb-gallery { padding: 0 24px; }
     .lb-gallery { grid-template-columns: 1fr 1fr; }
     .case-blocks { padding: 0 24px; gap: 32px; margin: 36px auto 70px; }
+    .case-blocks--tight { padding: 0; gap: 0; margin: 0 auto 60px; }
+    .case-blocks--tight .case-block-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
     .case-block-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .case-block-video-row { grid-template-columns: 1fr; }
     .loader-options { gap: 10px; }
     .loader-toggle-text { font-size: 0.64rem; }
 

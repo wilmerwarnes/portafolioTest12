@@ -2554,7 +2554,7 @@ function renderCaseBlock(block) {
     }
 }
 function renderCaseBlocks(blocks, project) {
-    const tight = project && project.name === 'Tobey';
+    const tight = project && (project.layout === 'tight' || project.name === 'Tobey' || blocks.some(b => b.type === 'grid' || b.type === 'video-row' || b.type === 'embed-txt'));
     const cls = tight ? 'case-blocks case-blocks--tight' : 'case-blocks';
     return `<div class="${cls}">${blocks.map(renderCaseBlock).join('')}</div>`;
 }
@@ -2622,7 +2622,7 @@ window.openLightbox = openLightbox = function (cat, id) {
         ? renderCaseBlocks(project.blocks, project)
         : `<div class="lb-body"><p>${project.desc}</p></div><div class="lb-gallery">${project.gallery.map((src) => `<img src="${src}" alt="${project.name}" loading="lazy" draggable="false">`).join('')}</div>`;
 
-    const isTight = project.name === 'Tobey';
+    const isTight = project.layout === 'tight' || project.name === 'Tobey' || (project.blocks && project.blocks.some(b => b.type === 'grid' || b.type === 'video-row' || b.type === 'embed-txt'));
     const heroHTML = isTight ? '' : `
             <div class="lb-hero">
                 <img src="${project.img}" alt="${project.name}" draggable="false">

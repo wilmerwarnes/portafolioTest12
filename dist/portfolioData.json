@@ -5,65 +5,41 @@
       {
         "id": 1,
         "name": "Little Turtle",
-        "desc": "modeling, character texturing, rigging/setup, animation, grooming, cloth simulation, lighting.",
+        "desc": "Character Animation",
         "img": "assets/Portafolio/3d_projects/01_LittleTurtle/cover/cover.webp",
         "gallery": [
           "assets/Portafolio/3d_projects/01_LittleTurtle/cover/cover.webp",
-          "assets/Portafolio/3d_projects/01_LittleTurtle/00_header.png",
-          "assets/Portafolio/3d_projects/01_LittleTurtle/01_hero.png"
+          "assets/Portafolio/3d_projects/01_LittleTurtle/00_header.jpg",
+          "assets/Portafolio/3d_projects/01_LittleTurtle/01_header.jpg"
         ],
         "blocks": [
           {
             "type": "image",
-            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/00_header.png"
+            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/00_header.jpg"
           },
           {
             "type": "image",
-            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/01_hero.png"
+            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/01_header.jpg"
+          },
+          {
+            "type": "video",
+            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/02_video.mp4"
           },
           {
             "type": "grid",
             "images": [
-              "assets/Portafolio/3d_projects/01_LittleTurtle/02_grid_01.png",
-              "assets/Portafolio/3d_projects/01_LittleTurtle/02_grid_02.png",
-              "assets/Portafolio/3d_projects/01_LittleTurtle/02_grid_03.png",
-              "assets/Portafolio/3d_projects/01_LittleTurtle/02_grid_04.png"
+              "assets/Portafolio/3d_projects/01_LittleTurtle/03_grid_01.jpg",
+              "assets/Portafolio/3d_projects/01_LittleTurtle/03_grid_02.jpg",
+              "assets/Portafolio/3d_projects/01_LittleTurtle/03_grid_03.jpg",
+              "assets/Portafolio/3d_projects/01_LittleTurtle/03_grid_04.jpg"
             ]
-          },
-          {
-            "type": "image",
-            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/03_header2.png"
-          },
-          {
-            "type": "video-row",
-            "items": [
-              {
-                "type": "embed-txt",
-                "src": "assets/Portafolio/3d_projects/01_LittleTurtle/04_row_a_embed.txt"
-              },
-              {
-                "type": "video",
-                "src": "assets/Portafolio/3d_projects/01_LittleTurtle/04_row_b.mp4"
-              }
-            ]
-          },
-          {
-            "type": "image",
-            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/05_header3.png"
-          },
-          {
-            "type": "video",
-            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/06_video.mp4"
           },
           {
             "type": "embed-txt",
-            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/07_embed.txt"
-          },
-          {
-            "type": "video",
-            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/08_video.mp4"
+            "src": "assets/Portafolio/3d_projects/01_LittleTurtle/04_embed.txt"
           }
-        ]
+        ],
+        "layout": "tight"
       },
       {
         "id": 2,
@@ -126,70 +102,8 @@
             "type": "video",
             "src": "assets/Portafolio/3d_projects/02_Tobey/08_video.mp4"
           }
-        ]
-      },
-      {
-        "id": 3,
-        "name": "Ara",
-        "desc": "modeling, character texturing, rigging/setup, animation, grooming, cloth simulation, lighting, to compositing.",
-        "img": "assets/Portafolio/3d_projects/03_Ara/cover/cover.webp",
-        "gallery": [
-          "assets/Portafolio/3d_projects/03_Ara/cover/cover.webp",
-          "assets/Portafolio/3d_projects/03_Ara/00_header.png",
-          "assets/Portafolio/3d_projects/03_Ara/01_hero.png"
         ],
-        "blocks": [
-          {
-            "type": "image",
-            "src": "assets/Portafolio/3d_projects/03_Ara/00_header.png"
-          },
-          {
-            "type": "image",
-            "src": "assets/Portafolio/3d_projects/03_Ara/01_hero.png"
-          },
-          {
-            "type": "grid",
-            "images": [
-              "assets/Portafolio/3d_projects/03_Ara/02_grid_01.png",
-              "assets/Portafolio/3d_projects/03_Ara/02_grid_02.png",
-              "assets/Portafolio/3d_projects/03_Ara/02_grid_03.png",
-              "assets/Portafolio/3d_projects/03_Ara/02_grid_04.png"
-            ]
-          },
-          {
-            "type": "image",
-            "src": "assets/Portafolio/3d_projects/03_Ara/03_header2.png"
-          },
-          {
-            "type": "video-row",
-            "items": [
-              {
-                "type": "embed-txt",
-                "src": "assets/Portafolio/3d_projects/03_Ara/04_row_a_embed.txt"
-              },
-              {
-                "type": "video",
-                "src": "assets/Portafolio/3d_projects/03_Ara/04_row_b.mp4"
-              }
-            ]
-          },
-          {
-            "type": "image",
-            "src": "assets/Portafolio/3d_projects/03_Ara/05_header3.png"
-          },
-          {
-            "type": "video",
-            "src": "assets/Portafolio/3d_projects/03_Ara/06_video.mp4"
-          },
-          {
-            "type": "embed-txt",
-            "src": "assets/Portafolio/3d_projects/03_Ara/07_embed.txt"
-          },
-          {
-            "type": "video",
-            "src": "assets/Portafolio/3d_projects/03_Ara/08_video.mp4"
-          }
-        ]
+        "layout": "tight"
       }
     ]
   },

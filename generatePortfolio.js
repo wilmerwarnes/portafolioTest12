@@ -158,7 +158,7 @@ function main() {
         if (b.type === 'grid' && b.images[0]) gallery.push(b.images[0]);
       }
       while (gallery.length < 1) gallery.push(cover);
-      projects.push({ id: order, name: projName, desc: projDesc, img: cover, gallery: gallery.slice(0, 3), blocks });
+      projects.push({ id: order, name: projName, desc: projDesc, img: cover, gallery: gallery.slice(0, 3), blocks, layout: 'tight' });
     }
     projects.sort((a, b) => a.id - b.id);
     // si no hay proyectos escaneados, usa fallback del existing

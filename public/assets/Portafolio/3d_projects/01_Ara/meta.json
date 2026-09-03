@@ -1,5 +1,7 @@
 {
   "title": "Ara",
   "desc": "modeling, character texturing, rigging/setup, animation, grooming, cloth simulation, lighting, to compositing.",
-  "order": 1
+  "order": 1,
+  "title_en": "Ara",
+  "desc_en": "modeling, character texturing, rigging/setup, animation, grooming, cloth simulation, lighting, to compositing. (EN)"
 }

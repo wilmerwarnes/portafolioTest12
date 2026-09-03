@@ -90,8 +90,8 @@ const translations: Translations = {
         skill_4: 'Edición de Video & Postproducción',
         contact_sub: 'Disponible para proyectos y colaboraciones creativas.',
         social_email: 'Email Directo',
-        profile_hero_title: 'Soy<br><span class="grad-text">Wilmer Warnes</span>',
-        contact_hero_title: 'Hablemos<br><span class="grad-text">de tu proyecto</span>',
+        profile_hero_title: 'Hola soy Wilmer Warnes',
+        contact_hero_title: 'No dudes en contactarme o simplemente saludarme en Instagram.',
         card_title_3d: 'Proyectos 3D',
         card_title_diseno: 'Diseño Gráfico',
         card_title_edicion: 'Edición de Video',
@@ -141,8 +141,8 @@ const translations: Translations = {
         skill_4: 'Video Editing & Post-Production',
         contact_sub: 'Available for projects and creative collaborations.',
         social_email: 'Direct Email',
-        profile_hero_title: 'I\'m<br><span class="grad-text">Wilmer Warnes</span>',
-        contact_hero_title: 'Let\'s talk<br><span class="grad-text">about your project</span>',
+        profile_hero_title: 'Hi I\'m Wilmer Warnes',
+        contact_hero_title: 'Feel free to contact me or just say hello on Instagram.',
         card_title_3d: '3D Projects',
         card_title_diseno: 'Graphic Design',
         card_title_edicion: 'Video Editing',
@@ -1574,8 +1574,8 @@ const INFO_CARD_SCALE_DESKTOP = 0.0125;
 // style.css) en vez de 620x380, asi que necesita su propia escala.
 const INFO_CARD_SCALE_MOBILE = 0.0125;
 
-const PROFILE_CARD_IMAGE = 'https://picsum.photos/seed/wilmer-perfil-card/700/700';
-const CONTACT_CARD_IMAGE = 'https://picsum.photos/seed/wilmer-contacto-card/700/700';
+const PROFILE_CARD_IMAGE = 'assets/img/aboutme/me_foto.jpg';
+let CONTACT_CARD_IMAGE = 'assets/img/aboutme/me_foto.jpg';
 
 function infoCardInnerHTML(type) {
     const t = translations[currentLang];
@@ -1583,7 +1583,6 @@ function infoCardInnerHTML(type) {
         return `
             <div class="info-card-media"><img src="${PROFILE_CARD_IMAGE}" alt="Wilmer Warnes" draggable="false"></div>
             <div class="info-card-body">
-                <span class="info-card-eyebrow">${t.about_role}</span>
                 <h3 class="info-card-title">${t.profile_hero_title}</h3>
                 <p class="info-card-bio">${t.about_desc}</p>
                 <div class="info-card-tags">
@@ -1594,15 +1593,14 @@ function infoCardInnerHTML(type) {
     return `
         <div class="info-card-media"><img src="${CONTACT_CARD_IMAGE}" alt="Contacto Wilmer Warnes" draggable="false"></div>
         <div class="info-card-body">
-            <span class="info-card-eyebrow">${t.contact_sub}</span>
             <h3 class="info-card-title">${t.contact_hero_title}</h3>
             <div class="info-card-links">
-                <a href="https://artstation.com" target="_blank" rel="noopener" title="ArtStation"><i class="fa-brands fa-artstation"></i></a>
-                <a href="https://behance.net" target="_blank" rel="noopener" title="Behance"><i class="fa-brands fa-behance"></i></a>
-                <a href="mailto:contacto@wilmerwarnes.com" title="${t.social_email}"><i class="fa-solid fa-envelope"></i></a>
-                <a href="https://instagram.com" target="_blank" rel="noopener" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://tiktok.com" target="_blank" rel="noopener" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="https://youtube.com" target="_blank" rel="noopener" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.artstation.com/wilmerwarnes" target="_blank" rel="noopener" title="ArtStation"><i class="fa-brands fa-artstation"></i></a>
+                <a href="https://www.behance.net/wilmerwarnes" target="_blank" rel="noopener" title="Behance"><i class="fa-brands fa-behance"></i></a>
+                <a href="mailto:wilmerwarnes27@gmail.com" title="${t.social_email}"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://www.instagram.com/wilmerwarnes/" target="_blank" rel="noopener" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@wilmerwarnes" target="_blank" rel="noopener" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://www.youtube.com/@wilmerwarnes" target="_blank" rel="noopener" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
             </div>
         </div>`;
 }
@@ -1649,6 +1647,44 @@ function applyResponsiveInfoCards() {
     });
 }
 applyResponsiveInfoCards();
+
+let contactCoverIndex = 0;
+let contactCovers: string[] = [];
+function collectContactCovers() {
+    contactCovers = [];
+    try {
+        const data = portfolioData as any;
+        if (!data) return;
+        for (const cat of Object.keys(data)) {
+            const projs = data[cat]?.projects || [];
+            for (const p of projs) {
+                if (p.img) contactCovers.push(p.img);
+            }
+        }
+    } catch {}
+}
+function startContactCoverRotation() {
+    collectContactCovers();
+    if (contactCovers.length && CONTACT_CARD_IMAGE.includes('picsum')) {
+        CONTACT_CARD_IMAGE = contactCovers[0];
+        const img0 = infoCardObjects.contact?.element?.querySelector('.info-card-media img') as HTMLImageElement | null;
+        if (img0) img0.src = CONTACT_CARD_IMAGE;
+    }
+    if (contactCovers.length <= 1) return;
+    setInterval(() => {
+        contactCoverIndex = (contactCoverIndex + 1) % contactCovers.length;
+        CONTACT_CARD_IMAGE = contactCovers[contactCoverIndex];
+        const img = infoCardObjects.contact?.element?.querySelector('.info-card-media img') as HTMLImageElement | null;
+        if (img) {
+            img.style.transition = 'opacity 0.6s ease';
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = CONTACT_CARD_IMAGE;
+                img.style.opacity = '1';
+            }, 300);
+        }
+    }, 2800);
+}
 
 const infoCardParallax = {
     about: { x: 0, y: 0 },

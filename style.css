@@ -304,7 +304,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
 .info-card-bio { font-size: 0.78rem; line-height: 1.55; opacity: 0.75; }
 .info-card-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
 .info-card-tags span { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; border-top: 1px solid var(--border-color); padding-top: 6px; opacity: 0.8; }
-.info-card-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; pointer-events: auto; }
+.info-card-links { display: grid; grid-template-columns: repeat(3, 42px); gap: 10px; margin-top: 10px; pointer-events: auto; justify-content: start; }
 .info-card-links a {
     display: flex; align-items: center; justify-content: center;
     width: 42px; height: 42px; border-radius: 50%;

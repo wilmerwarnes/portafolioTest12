@@ -1705,6 +1705,8 @@ function updateInfoCardVisual(type, alpha) {
     p.y += (targetY - p.y) * INFO_PARALLAX_EASE;
 
     if (alpha > 0.02) {
+        // Contacto con video: sin parallax interno para no dejar borde negro
+        if (type === 'contact' && obj.element.querySelector('.info-card-media video')) return;
         const mediaEl = obj.element.querySelector('.info-card-media img') || obj.element.querySelector('.info-card-media video');
         if (mediaEl) (mediaEl as HTMLElement).style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px)`;
     }

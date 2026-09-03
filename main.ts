@@ -2698,6 +2698,20 @@ window.openLightbox = openLightbox = function (cat, id) {
 
 window.closeLightbox = closeLightbox = function () {
     if (lightboxEl) {
+        // Pausar todos los videos/iframes del proyecto para que no sigan sonando
+        lightboxEl.querySelectorAll('video').forEach((v) => {
+            const vid = v as HTMLVideoElement;
+            vid.pause();
+            vid.currentTime = 0;
+        });
+        lightboxEl.querySelectorAll('iframe').forEach((f) => {
+            try {
+                (f as HTMLIFrameElement).contentWindow?.postMessage('{"method":"pause"}', '*');
+                // Fallback Vimeo: recargar src para detener
+                const src = f.getAttribute('src');
+                if (src && src.includes('vimeo')) f.setAttribute('src', src);
+            } catch {}
+        });
         lightboxEl.classList.remove('open');
         lightboxEl.scrollTop = 0;
     }

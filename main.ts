@@ -1845,28 +1845,11 @@ function buildCardElement(catSpec) {
     const handleCardTap = (e: Event) => {
         e.stopPropagation();
         const key = (el.dataset.cat as string) || catSpec.key;
-        if (isMobileViewport()) {
-            const idx = CARD_CATEGORIES.findIndex((c) => c.key === key);
-            if (idx !== -1 && idx !== categoryCenterIndex) {
-                goToCategoryIndex(idx);
-                return;
-            }
-        }
+        // En móvil, un solo tap abre directo la categoría (no dos pasos)
         openProjectsCategory(key);
         playSFX('open');
     };
     el.addEventListener('click', handleCardTap);
-    el.addEventListener('touchend', (e) => {
-        // Evitar que el swipe de sección interfiera con el tap
-        if ((e as TouchEvent).changedTouches && (e as TouchEvent).changedTouches.length) {
-            const touch = (e as TouchEvent).changedTouches[0];
-            const target = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement | null;
-            const card = target?.closest('.proj-card') as HTMLElement | null;
-            if (card && card === el) {
-                handleCardTap(e);
-            }
-        }
-    }, { passive: false });
 
     const imgs = el.querySelectorAll('.pc-img');
     const covers = catData.projects.map((p) => p.img);
@@ -1991,7 +1974,11 @@ function layoutCategoryCardsMobile() {
             obj.element.classList.toggle('js-hover', absOffset === 0);
         }
         const hitMesh = projectCardHitMeshes[catSpec.key];
-        if (hitMesh) hitMesh.position.x = x;
+        if (hitMesh) {
+            hitMesh.position.set(x, hitMesh.position.y, -42 - absOffset * 0.9);
+            hitMesh.rotation.y = rotY;
+            hitMesh.scale.set(scale / PROJECT_CARD_SCALE_DESKTOP, scale / PROJECT_CARD_SCALE_DESKTOP, 1);
+        }
     });
 }
 
@@ -2018,7 +2005,11 @@ function applyResponsiveProjectCards() {
             obj.element.classList.remove('js-hover');
         }
         const hitMesh = projectCardHitMeshes[catSpec.key];
-        if (hitMesh) hitMesh.position.x = x;
+        if (hitMesh) {
+            hitMesh.position.set(x, hitMesh.position.y, -42);
+            hitMesh.rotation.set(0, 0, 0);
+            hitMesh.scale.set(1, 1, 1);
+        }
     });
 }
 applyResponsiveProjectCards();
@@ -2616,13 +2607,6 @@ window.addEventListener('click', (e) => {
         }
         if (obj.userData && obj.userData.type === 'project-card') {
             const key = obj.userData.key as string;
-            if (isMobileViewport()) {
-                const idx = CARD_CATEGORIES.findIndex((c) => c.key === key);
-                if (idx !== -1 && idx !== categoryCenterIndex) {
-                    goToCategoryIndex(idx);
-                    return;
-                }
-            }
             openProjectsCategory(key);
             playSFX('open');
         }

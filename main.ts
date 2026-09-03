@@ -700,7 +700,7 @@ function hideScrollHintDesktop() {
     scrollHintDesktopEl.classList.remove('active');
 }
 function updateScrollHintVisibility() {
-    if (galleryOpen) {
+    if (galleryOpen || lightboxEl?.classList.contains('open')) {
         hideScrollHint();
         hideScrollHintDesktop();
         return;
@@ -2267,6 +2267,7 @@ function openGallery(category) {
     if (galleryTitleEl) galleryTitleEl.innerText = galleryTitleForCategory(category);
     galleryHudEl?.classList.add('active');
     updateCategorySwitchVisibility();
+    updateScrollHintVisibility();
 }
 
 function closeGallery() {
@@ -2281,6 +2282,7 @@ function closeGallery() {
     galleryHitMeshes = [];
     playSFX('close');
     updateCategorySwitchVisibility();
+    updateScrollHintVisibility();
 }
 window.closeGallery = closeGallery;
 
@@ -2766,6 +2768,7 @@ window.openLightbox = openLightbox = function (cat, id) {
 
     lightboxEl.classList.add('open');
     lightboxCloseBtn.classList.add('open');
+    updateScrollHintVisibility();
     playSFX('open');
 };
 
@@ -2801,6 +2804,7 @@ window.closeLightbox = closeLightbox = function () {
         }
     }
     lightboxEl?.classList.remove('single-video');
+    updateScrollHintVisibility();
     playSFX('close');
 };
 

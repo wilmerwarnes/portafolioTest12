@@ -1831,6 +1831,7 @@ function buildCardElement(catSpec) {
     }
     const el = document.createElement('div');
     el.className = 'proj-card';
+    el.dataset.cat = catSpec.key;
     el.innerHTML = `
         <div class="pc-inner">
             <img class="pc-img pc-active" src="${catData.projects[0].img}" alt="" draggable="false">
@@ -1841,18 +1842,31 @@ function buildCardElement(catSpec) {
         <div class="pc-title">${t[catSpec.titleKey]}<span class="pc-sub">${t[catSpec.subKey]}</span></div>
     `;
     el.style.cursor = 'pointer';
-    el.addEventListener('click', (e) => {
+    const handleCardTap = (e: Event) => {
         e.stopPropagation();
+        const key = (el.dataset.cat as string) || catSpec.key;
         if (isMobileViewport()) {
-            const idx = CARD_CATEGORIES.findIndex((c) => c.key === catSpec.key);
-            if (idx !== categoryCenterIndex) {
+            const idx = CARD_CATEGORIES.findIndex((c) => c.key === key);
+            if (idx !== -1 && idx !== categoryCenterIndex) {
                 goToCategoryIndex(idx);
                 return;
             }
         }
-        openProjectsCategory(catSpec.key);
+        openProjectsCategory(key);
         playSFX('open');
-    });
+    };
+    el.addEventListener('click', handleCardTap);
+    el.addEventListener('touchend', (e) => {
+        // Evitar que el swipe de sección interfiera con el tap
+        if ((e as TouchEvent).changedTouches && (e as TouchEvent).changedTouches.length) {
+            const touch = (e as TouchEvent).changedTouches[0];
+            const target = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement | null;
+            const card = target?.closest('.proj-card') as HTMLElement | null;
+            if (card && card === el) {
+                handleCardTap(e);
+            }
+        }
+    }, { passive: false });
 
     const imgs = el.querySelectorAll('.pc-img');
     const covers = catData.projects.map((p) => p.img);
@@ -2377,6 +2391,25 @@ if (catPrevBtn)
 if (catNextBtn)
     catNextBtn.addEventListener('click', () => goToCategoryIndex(categoryCenterIndex + 1));
 
+// Swipe horizontal para categorías en móvil (cuando no está abierta la galería)
+let catSwipeX: number | null = null;
+let catSwipeY: number | null = null;
+window.addEventListener('touchstart', (e) => {
+    if (!isMobileViewport() || !experienceStarted || currentSectionIndex !== 2 || galleryOpen) return;
+    if (e.touches.length !== 1) return;
+    catSwipeX = e.touches[0].clientX;
+    catSwipeY = e.touches[0].clientY;
+}, { passive: true });
+window.addEventListener('touchend', (e) => {
+    if (catSwipeX === null || catSwipeY === null) return;
+    if (!isMobileViewport() || galleryOpen || currentSectionIndex !== 2) { catSwipeX = null; catSwipeY = null; return; }
+    const dx = catSwipeX - e.changedTouches[0].clientX;
+    const dy = catSwipeY - e.changedTouches[0].clientY;
+    catSwipeX = null; catSwipeY = null;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+    goToCategoryIndex(categoryCenterIndex + (dx > 0 ? 1 : -1));
+}, { passive: true });
+
 function goToSection(index) {
     index = Math.max(0, Math.min(SECTIONS.length - 1, index));
     if (galleryOpen) closeGallery();
@@ -2547,6 +2580,8 @@ window.addEventListener('click', (e) => {
     // los planos invisibles (galleryHitMeshes) en vez de perder el clic.
     if (galleryOpen) {
         if (!canvas || e.target !== canvas) return;
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
         const hits = raycaster.intersectObjects([galleryHitGroup], true);
         if (hits.length > 0) {
@@ -2569,6 +2604,9 @@ window.addEventListener('click', (e) => {
 
     if (!canvas || e.target !== canvas) return;
     if (currentSectionIndex !== 2) return;
+    // Usar coordenadas del evento para raycast preciso en móvil
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects([projectCardsHitGroup], true);
     if (intersects.length > 0) {

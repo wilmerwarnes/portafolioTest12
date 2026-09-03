@@ -432,14 +432,23 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
 }
 .gallery-card .gc-inner { position: absolute; inset: 0; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
 .gallery-card:hover .gc-inner,
-.gallery-card.js-hover .gc-inner { transform: translateY(-10px); }
+.gallery-card.js-hover .gc-inner { transform: translateY(-10px) scale(1.03); }
 .gallery-card .gc-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease; }
 .gallery-card.gc-center .gc-img { transform: scale(1.03); }
-.gallery-card .gc-inner::after {
-    content: ""; position: absolute; inset: 0; z-index: 1;
+.gallery-card::after {
+    content: ""; position: absolute; inset: 0; z-index: 1; border-radius: 26px;
     background: linear-gradient(0deg, rgba(3,3,3,0.9) 0%, rgba(3,3,3,0.1) 55%, rgba(3,3,3,0.3) 100%);
+    transition: background 0.4s ease; pointer-events: none;
 }
-.gallery-card .gc-overlay { position: absolute; left: 22px; right: 22px; bottom: 22px; z-index: 2; }
+.gallery-card:hover::after,
+.gallery-card.js-hover::after,
+.gallery-card.gc-center::after {
+    background: linear-gradient(0deg, rgba(3,3,3,0.75) 0%, rgba(3,3,3,0.05) 55%, rgba(3,3,3,0.2) 100%);
+}
+.gallery-card .gc-inner::after { content: none; }
+.gallery-card .gc-overlay { position: absolute; left: 22px; right: 22px; bottom: 22px; z-index: 2; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+.gallery-card:hover .gc-overlay,
+.gallery-card.js-hover .gc-overlay { transform: translateY(-4px); }
 .gallery-card .gc-eyebrow { display: block; font-size: 0.6rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; margin-bottom: 8px; }
 .gallery-card .gc-title { font-size: 1.28rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.4px; line-height: 1.12; }
 .gallery-card .gc-sub { margin-top: 0; font-size: 0.72rem; line-height: 1.55; opacity: 0; max-height: 0; overflow: hidden; transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s ease; }
@@ -527,6 +536,16 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
 .case-blocks--tight .case-block-video-row .video-row-item video,
 .case-blocks--tight .case-block-video-row .video-row-item img,
 .case-blocks--tight .case-block-video-row .video-row-item > div { border-radius: 0; }
+.case-block-pdf { background: #fff; border-radius: 12px; overflow: hidden; }
+.case-block-pdf iframe { display: block; border-radius: 12px; }
+.case-blocks--tight .case-block-pdf { border-radius: 0; }
+.case-blocks--tight .case-block-pdf iframe { border-radius: 0; }
+/* Video único en edicion: ocupa pantalla */
+.lightbox-overlay.single-video .case-blocks--tight .case-block-video video {
+    height: 82vh; max-height: 82vh; width: auto; max-width: 100%;
+    margin: 0 auto; display: block; object-fit: contain; background: #000;
+}
+.lightbox-overlay.single-video .case-blocks--tight { gap: 0; }
 /* Ocultar hero solo para Tobey */
 .lb-landing--tight .lb-hero { display: none; }
 

@@ -21,13 +21,26 @@ function categoryTitle(key) {
 function readMeta(projectPath, folderName) {
   const metaPath = path.join(projectPath, 'meta.json');
   const fallbackName = folderName.replace(/^\d+_/, '');
-  let meta = { title: fallbackName, desc: '' };
+  let meta = { title: fallbackName, desc: '', title_en: '', desc_en: '' };
   if (fs.existsSync(metaPath)) {
     try {
       const raw = fs.readFileSync(metaPath, 'utf-8').replace(/^\uFEFF/, '');
       const j = JSON.parse(raw);
-      meta.title = j.title || fallbackName;
-      meta.desc = j.desc || '';
+      // Soporta title/desc como string o como {es,en}
+      if (j.title && typeof j.title === 'object') {
+        meta.title = j.title.es || j.title.en || fallbackName;
+        meta.title_en = j.title.en || j.title.es || fallbackName;
+      } else {
+        meta.title = j.title || fallbackName;
+        meta.title_en = j.title_en || j.title || fallbackName;
+      }
+      if (j.desc && typeof j.desc === 'object') {
+        meta.desc = j.desc.es || j.desc.en || '';
+        meta.desc_en = j.desc.en || j.desc.es || '';
+      } else {
+        meta.desc = j.desc || '';
+        meta.desc_en = j.desc_en || j.desc || '';
+      }
       if (j.order !== undefined) meta.order = j.order;
     } catch (e) { console.warn('meta.json parse error', metaPath, e.message); }
   }
@@ -99,6 +112,11 @@ function buildBlocks(projectPath, projectRel, files) {
       i = Math.max(...idxs) + 1;
       continue;
     }
+    // PDF
+    if (ext === '.pdf') {
+      blocks.push({ type: 'pdf', src: rel });
+      i++; continue;
+    }
     // Single embed-txt
     if (name.endsWith('_embed.txt') || name.endsWith('_insertar.txt') || (name.endsWith('.txt') && name.includes('embed'))) {
       blocks.push({ type: 'embed-txt', src: rel });
@@ -144,7 +162,9 @@ function main() {
       const order = m ? parseInt(m[1], 10) : 999;
       const meta = readMeta(projPath, projFolder);
       const projName = meta.title;
+      const projNameEn = meta.title_en || meta.title;
       const projDesc = meta.desc;
+      const projDescEn = meta.desc_en || meta.desc;
       const projRel = path.join('assets/Portafolio', catFolder, projFolder).replace(/\\/g, '/');
       const cover = findCover(projPath, projRel);
       const files = fs.readdirSync(projPath);
@@ -158,7 +178,7 @@ function main() {
         if (b.type === 'grid' && b.images[0]) gallery.push(b.images[0]);
       }
       while (gallery.length < 1) gallery.push(cover);
-      projects.push({ id: order, name: projName, desc: projDesc, img: cover, gallery: gallery.slice(0, 3), blocks, layout: 'tight' });
+      projects.push({ id: order, name: projName, name_en: projNameEn, desc: projDesc, desc_en: projDescEn, img: cover, gallery: gallery.slice(0, 3), blocks, layout: 'tight' });
     }
     projects.sort((a, b) => a.id - b.id);
     // si no hay proyectos escaneados, usa fallback del existing

@@ -167,6 +167,25 @@ function syncLangButtons() {
     if (loaderLangBtn) loaderLangBtn.innerText = label;
 }
 
+function getProjectName(project: any): string {
+    return currentLang === 'en' && project.name_en ? project.name_en : project.name;
+}
+function getProjectDesc(project: any): string {
+    return currentLang === 'en' && project.desc_en ? project.desc_en : project.desc;
+}
+function updateGalleryProjectsLanguage() {
+    galleryCardObjects.forEach((card) => {
+        const titleEl = card.el.querySelector('.gc-title') as HTMLElement | null;
+        const subEl = card.el.querySelector('.gc-sub') as HTMLElement | null;
+        if (titleEl) titleEl.textContent = getProjectName(card.project);
+        if (subEl) subEl.textContent = getProjectDesc(card.project);
+    });
+    // Si hay un lightbox abierto, actualizar su título también
+    if (lightboxEl?.classList.contains('open') && currentLightboxProject) {
+        const h3 = lightboxEl.querySelector('.lb-hero-caption h3') as HTMLElement | null;
+        if (h3) h3.textContent = getProjectName(currentLightboxProject);
+    }
+}
 function setLanguage(lang) {
     currentLang = lang;
     syncLangButtons();
@@ -176,6 +195,7 @@ function setLanguage(lang) {
     updateHeroTextLanguage();
     updateMusicChoiceLabel();
     updateGalleryTitleLanguage();
+    updateGalleryProjectsLanguage();
     updateScrollHintText();
     playSFX('click');
 }
@@ -211,6 +231,7 @@ let sfxVolume = 0.5;
 let currentTrackIndex = 0;
 let sfxEnabled = true;
 let currentAudioElement: HTMLAudioElement | null = null;
+let wasBackgroundMusicPlayingBeforeVideo = false;
 
 const tracks = [
     { name: 'Solarflex Space', src: 'assets/music/01-Solarflex Space.mp3' },
@@ -2094,12 +2115,12 @@ function buildGalleryCard(project, index) {
     el.className = 'gallery-card';
     el.innerHTML = `
         <div class="gc-inner">
-            <img class="gc-img" src="${project.img}" alt="${project.name}" draggable="false">
-            <div class="gc-overlay">
-                <span class="gc-eyebrow">Proyecto 0${project.id}</span>
-                <h3 class="gc-title">${project.name}</h3>
-                <p class="gc-sub">${project.desc}</p>
-            </div>
+            <img class="gc-img" src="${project.img}" alt="${getProjectName(project)}" draggable="false">
+        </div>
+        <div class="gc-overlay">
+            <span class="gc-eyebrow">Proyecto 0${project.id}</span>
+            <h3 class="gc-title">${getProjectName(project)}</h3>
+            <p class="gc-sub">${getProjectDesc(project)}</p>
         </div>
     `;
     el.addEventListener('click', (e) => {
@@ -2354,6 +2375,7 @@ function snapToNearestSection() {
 
 window.addEventListener('wheel', (e) => {
     if (!experienceStarted) return;
+    if (lightboxEl?.classList.contains('open')) return;
     if (galleryOpen) {
         handleGalleryWheel(e);
         return;
@@ -2376,6 +2398,7 @@ window.addEventListener(
     'touchstart',
     (e) => {
         if (!experienceStarted) return;
+        if (lightboxEl?.classList.contains('open')) return;
         touchStartY = e.touches[0].clientY;
     },
     { passive: true }
@@ -2384,6 +2407,7 @@ window.addEventListener(
     'touchmove',
     (e) => {
         if (!experienceStarted || touchStartY === null) return;
+        if (lightboxEl?.classList.contains('open')) return;
         if (galleryOpen) return;
         const currentY = e.touches[0].clientY;
         const deltaY = touchStartY - currentY;
@@ -2532,7 +2556,9 @@ function renderCaseBlock(block) {
         case 'gif':
             return `<div class="case-block case-block-image case-block-gif"><span class="case-block-tag">GIF</span><img src="${block.src}" alt="" loading="lazy" draggable="false"></div>`;
         case 'video':
-            return `<div class="case-block case-block-video"><video src="${block.src}"${block.poster ? ` poster="${block.poster}"` : ''} controls loop playsinline preload="metadata" muted></video></div>`;
+            return `<div class="case-block case-block-video"><video src="${block.src}"${block.poster ? ` poster="${block.poster}"` : ''} controls autoplay loop muted playsinline preload="metadata"></video></div>`;
+        case 'pdf':
+            return `<div class="case-block case-block-pdf"><iframe src="${block.src}#view=FitH" loading="lazy" style="width:100%;height:85vh;border:none;display:block;background:#fff;" title="PDF"></iframe><a href="${block.src}" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:12px;color:#fff;opacity:0.8;font-size:0.75rem;">Abrir PDF en nueva pestaña</a></div>`;
         case 'embed':
             return `<div class="case-block case-block-embed"><div style="padding:${block.ratio || '56.25%'} 0 0 0;position:relative;"><iframe src="${block.src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" allowfullscreen loading="lazy" title="Video"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script></div>`;
         case 'embed-txt': {
@@ -2545,7 +2571,7 @@ function renderCaseBlock(block) {
             return `<div class="case-block case-block-video-row">${(block.items || []).map((item) => {
                 if (item.type === 'embed') return `<div class="video-row-item"><div style="padding:${item.ratio || '56.25%'} 0 0 0;position:relative;"><iframe src="${item.src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" allowfullscreen loading="lazy"></iframe></div></div>`;
                 if (item.type === 'embed-txt') return `<div class="video-row-item" data-embed-txt="${item.src.replace(/"/g, '&quot;')}"><div style="padding:56.25% 0 0 0;position:relative;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0a10;color:rgba(255,255,255,0.6);font-size:0.75rem;">Cargando video...</div></div></div>`;
-                if (item.type === 'video') return `<div class="video-row-item"><video src="${item.src}"${item.poster ? ` poster="${item.poster}"` : ''} controls loop playsinline preload="metadata" muted></video></div>`;
+                if (item.type === 'video') return `<div class="video-row-item"><video src="${item.src}"${item.poster ? ` poster="${item.poster}"` : ''} controls autoplay loop muted playsinline preload="metadata"></video></div>`;
                 if (item.type === 'image') return `<div class="video-row-item"><img src="${item.src}" alt="" loading="lazy"></div>`;
                 return '';
             }).join('')}</div>`;
@@ -2586,6 +2612,7 @@ async function hydrateEmbedTxtBlocks(container: HTMLElement) {
 
 let lightboxEl = null;
 let lightboxCloseBtn = null;
+let currentLightboxProject: any = null;
 
 // El boton de cerrar (X) vive AFUERA de .lightbox-overlay (que es el que
 // hace scroll), como elemento propio position:fixed en <body>. Antes
@@ -2618,17 +2645,18 @@ window.openLightbox = openLightbox = function (cat, id) {
     }
     ensureLightboxCloseBtn();
 
+    currentLightboxProject = project;
     const bodyHTML = project.blocks
         ? renderCaseBlocks(project.blocks, project)
-        : `<div class="lb-body"><p>${project.desc}</p></div><div class="lb-gallery">${project.gallery.map((src) => `<img src="${src}" alt="${project.name}" loading="lazy" draggable="false">`).join('')}</div>`;
+        : `<div class="lb-body"><p>${getProjectDesc(project)}</p></div><div class="lb-gallery">${project.gallery.map((src) => `<img src="${src}" alt="${getProjectName(project)}" loading="lazy" draggable="false">`).join('')}</div>`;
 
     const isTight = project.layout === 'tight' || project.name === 'Tobey' || (project.blocks && project.blocks.some(b => b.type === 'grid' || b.type === 'video-row' || b.type === 'embed-txt'));
     const heroHTML = isTight ? '' : `
             <div class="lb-hero">
-                <img src="${project.img}" alt="${project.name}" draggable="false">
+                <img src="${project.img}" alt="${getProjectName(project)}" draggable="false">
                 <div class="lb-hero-caption">
                     <span class="lb-tag">Proyecto 0${project.id}</span>
-                    <h3>${project.name}</h3>
+                    <h3>${getProjectName(project)}</h3>
                 </div>
             </div>`;
     lightboxEl.innerHTML = `
@@ -2640,14 +2668,52 @@ window.openLightbox = openLightbox = function (cat, id) {
     // Hidratar embeds que vienen de archivos .txt (verifica el doc siempre)
     hydrateEmbedTxtBlocks(lightboxEl);
 
+    // Si es un solo video en edicion, marcar para estilo full-screen
+    if (cat === 'edicion' && project.blocks && project.blocks.length === 1 && project.blocks[0].type === 'video') {
+        lightboxEl.classList.add('single-video');
+    } else {
+        lightboxEl.classList.remove('single-video');
+    }
+
+    // Pausar música general cuando un video de edicion hace play
+    if (cat === 'edicion') {
+        const vids = lightboxEl.querySelectorAll('video');
+        vids.forEach((v) => {
+            v.addEventListener('play', () => {
+                if (currentAudioElement && !currentAudioElement.paused) {
+                    currentAudioElement.pause();
+                    wasBackgroundMusicPlayingBeforeVideo = true;
+                    isAudioPlaying = false;
+                    const btn = document.getElementById('master-audio-btn') as HTMLButtonElement | null;
+                    if (btn) btn.innerText = translations[currentLang].audio_play;
+                }
+            });
+        });
+    }
+
     lightboxEl.classList.add('open');
     lightboxCloseBtn.classList.add('open');
     playSFX('open');
 };
 
 window.closeLightbox = closeLightbox = function () {
-    if (lightboxEl) lightboxEl.classList.remove('open');
+    if (lightboxEl) {
+        lightboxEl.classList.remove('open');
+        lightboxEl.scrollTop = 0;
+    }
     if (lightboxCloseBtn) lightboxCloseBtn.classList.remove('open');
+    currentLightboxProject = null;
+    // Reanudar música si estaba pausada por video
+    if (wasBackgroundMusicPlayingBeforeVideo) {
+        wasBackgroundMusicPlayingBeforeVideo = false;
+        if (currentAudioElement && currentAudioElement.paused) {
+            currentAudioElement.play().catch(() => {});
+            isAudioPlaying = true;
+            const masterBtn = document.getElementById('master-audio-btn') as HTMLButtonElement | null;
+            if (masterBtn) masterBtn.innerText = translations[currentLang].audio_pause;
+        }
+    }
+    lightboxEl?.classList.remove('single-video');
     playSFX('close');
 };
 

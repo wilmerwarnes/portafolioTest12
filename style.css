@@ -298,6 +298,12 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
     background: linear-gradient(90deg, rgba(3,3,3,0) 55%, rgba(3,3,3,0.92) 100%);
 }
 .info-card-body { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 30px 36px; min-width: 0; }
+.info-card-body--about { justify-content: center; align-items: center; text-align: center; gap: 18px; }
+.info-card-body--about .info-card-title { text-align: center; }
+.info-card-body--about .info-card-bio { text-align: center; }
+.info-card-body--contact { justify-content: center; align-items: center; text-align: center; gap: 20px; }
+.info-card-body--contact .info-card-title { text-align: center; font-size: 1.35rem; line-height: 1.25; }
+.info-card-body--contact .info-card-links { justify-content: center; }
 .info-card-eyebrow { font-size: 0.62rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 0.55; display: flex; align-items: center; gap: 10px; }
 .info-card-eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--text-color); opacity: 0.5; }
 .info-card-title { font-size: 1.55rem; font-weight: 900; text-transform: uppercase; line-height: 1.05; letter-spacing: -0.5px; }
@@ -305,6 +311,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(
 .info-card-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
 .info-card-tags span { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; border-top: 1px solid var(--border-color); padding-top: 6px; opacity: 0.8; }
 .info-card-links { display: grid; grid-template-columns: repeat(3, 42px); gap: 10px; margin-top: 10px; pointer-events: auto; justify-content: start; }
+.info-card-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.15) contrast(1.06) brightness(0.9); }
 .info-card-links a {
     display: flex; align-items: center; justify-content: center;
     width: 42px; height: 42px; border-radius: 50%;

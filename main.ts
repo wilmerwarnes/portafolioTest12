@@ -1582,17 +1582,14 @@ function infoCardInnerHTML(type) {
     if (type === 'about') {
         return `
             <div class="info-card-media"><img src="${PROFILE_CARD_IMAGE}" alt="Wilmer Warnes" draggable="false"></div>
-            <div class="info-card-body">
+            <div class="info-card-body info-card-body--about">
                 <h3 class="info-card-title">${t.profile_hero_title}</h3>
                 <p class="info-card-bio">${t.about_desc}</p>
-                <div class="info-card-tags">
-                    <span>${t.skill_1}</span><span>${t.skill_2}</span><span>${t.skill_3}</span><span>${t.skill_4}</span>
-                </div>
             </div>`;
     }
     return `
-        <div class="info-card-media"><img src="${CONTACT_CARD_IMAGE}" alt="Contacto Wilmer Warnes" draggable="false"></div>
-        <div class="info-card-body">
+        <div class="info-card-media"><video src="assets/video/contactVideo.mp4" autoplay loop muted playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video></div>
+        <div class="info-card-body info-card-body--contact">
             <h3 class="info-card-title">${t.contact_hero_title}</h3>
             <div class="info-card-links">
                 <a href="https://www.artstation.com/wilmerwarnes" target="_blank" rel="noopener" title="ArtStation"><i class="fa-brands fa-artstation"></i></a>
@@ -1664,6 +1661,9 @@ function collectContactCovers() {
     } catch {}
 }
 function startContactCoverRotation() {
+    // Contacto ahora usa video, no rotación de portadas
+    const contactMedia = infoCardObjects.contact?.element?.querySelector('.info-card-media');
+    if (contactMedia?.querySelector('video')) return;
     collectContactCovers();
     if (contactCovers.length && CONTACT_CARD_IMAGE.includes('picsum')) {
         CONTACT_CARD_IMAGE = contactCovers[0];
@@ -1705,8 +1705,8 @@ function updateInfoCardVisual(type, alpha) {
     p.y += (targetY - p.y) * INFO_PARALLAX_EASE;
 
     if (alpha > 0.02) {
-        const img = obj.element.querySelector('.info-card-media img');
-        if (img) img.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px)`;
+        const mediaEl = obj.element.querySelector('.info-card-media img') || obj.element.querySelector('.info-card-media video');
+        if (mediaEl) (mediaEl as HTMLElement).style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px)`;
     }
 }
 

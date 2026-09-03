@@ -700,6 +700,11 @@ function hideScrollHintDesktop() {
     scrollHintDesktopEl.classList.remove('active');
 }
 function updateScrollHintVisibility() {
+    if (galleryOpen) {
+        hideScrollHint();
+        hideScrollHintDesktop();
+        return;
+    }
     if (experienceStarted) {
         if (isMobileViewport()) {
             showScrollHint();
@@ -2572,7 +2577,15 @@ window.addEventListener('click', (e) => {
             obj = obj.parent;
         }
         if (obj.userData && obj.userData.type === 'project-card') {
-            openProjectsCategory(obj.userData.key);
+            const key = obj.userData.key as string;
+            if (isMobileViewport()) {
+                const idx = CARD_CATEGORIES.findIndex((c) => c.key === key);
+                if (idx !== -1 && idx !== categoryCenterIndex) {
+                    goToCategoryIndex(idx);
+                    return;
+                }
+            }
+            openProjectsCategory(key);
             playSFX('open');
         }
     }
